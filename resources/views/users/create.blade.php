@@ -9,9 +9,9 @@
     </div>
     <div class="card-body">
 
-      @include('shared._errors')
 
       <form method="POST" action="{{ route('users.store') }}">
+          @include('shared._errors')
           {{ csrf_field() }}
           <div class="form-group">
             <label for="name">名称：</label>
