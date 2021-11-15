@@ -46,9 +46,4 @@ class UsersController extends Controller
     {
         return;
     }
-
-    public function logout(User $user)
-    {
-        return redirect()->route('home');
-    }
 }
