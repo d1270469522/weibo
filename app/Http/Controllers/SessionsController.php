@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SessionsController extends Controller
 {
@@ -28,9 +28,16 @@ class SessionsController extends Controller
 
         if (Auth::attempt($credentials, $request->has('remeber'))) {
 
-            session()->flash('success', '欢迎回来～！');
-            $fallback = route('users.show', [Auth::user()]);
-            return redirect()->intended($fallback);
+            if (Auth::user()->activated) {
+
+                session()->flash('success', '欢迎回来～！');
+                $fallback = route('users.show', [Auth::user()]);
+                return redirect()->intended($fallback);
+            } else {
+                Auth::logout();
+                session()->flash('warning', '你的账号未激活，请检查邮箱中的注册邮件进行激活。');
+                return redirect('/');
+            }
         } else {
 
             session()->flash('danger', '抱歉，账号或密码错误～！');
