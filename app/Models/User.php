@@ -45,8 +45,6 @@ class User extends Authenticatable
 
     public function gravatar($size = '100')
     {
-        // $hash = md5(strtolower(trim($this->attributes['email'])));
-        // return "http://www.gravatar.com/avatar/$hash?s=$size";
         return 'https://cdn.learnku.com/uploads/avatars/46657_1565072467.jpeg!/both/100x100';
     }
 
@@ -57,5 +55,10 @@ class User extends Authenticatable
         static::creating(function ($user) {
             $user->activation_token = Str::random(10);
         });
+    }
+
+    public function statuses()
+    {
+        return $this->hasMany(Status::class);
     }
 }
